@@ -43,6 +43,10 @@
 
 # FAQ
 
+- Why not socket.io https://www.confluent.io/blog/consuming-messages-out-of-apache-kafka-in-a-browser/
+- Why nextjs?
+- Why kafka?
+
 # Acknowledgment
 
 # License
