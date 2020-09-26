@@ -1,0 +1,16 @@
+varsion: '3.7'
+
+networks:
+  foresta-net:
+    driver: bridge
+
+services:
+  zookeeper:
+    image: 'bitname/zookeeper:latest'
+    networks:
+      - foresta-net
+  kafka:
+    image: 'bitnami/kafka:latest'
+    network:
+      - foresta-net
+
