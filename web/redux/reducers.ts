@@ -8,9 +8,19 @@ export const scoreReducer = (state = 0, action) => {
     default:
       return state
   }
-};
+}
+
+export const usernameReducer = (state = "", action) => {
+  switch(action.type) {
+    case actions.SET_USERNAME:
+      return action.value
+    default:
+      return state;
+  }
+}
 
 const rootReducer = combineReducers({
+    username: usernameReducer,
     score: scoreReducer
 });
 
