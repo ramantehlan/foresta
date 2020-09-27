@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
 	"github.com/googollee/go-socket.io"
@@ -60,20 +59,23 @@ func StartSocket() *socketio.Server {
 	})
 
 	server.OnEvent("/", "score", func(c socketio.Conn, score ScoreMessage) int64 {
+		rank := int64(0)
 
-		member := redis.Z{
-			score.Score,
-			score.Username,
+		if score.Username != "" {
+			member := redis.Z{
+				score.Score,
+				score.Username,
+			}
+
+			rdb.ZAdd("player:score", member)
+			rank = rdb.ZRevRank("player:score", score.Username).Val()
 		}
 
-		rdb.ZAdd("player:score", member)
-		rank := rdb.ZRevRank("player:score", score.Username)
-
 		// Top rank
-		topRank := rdb.ZRevRange("player:score", 0, 9)
+		topRank := rdb.ZRevRangeWithScores("player:score", 0, 9)
 		server.BroadcastToRoom("/", "leaderboard", "list", topRank.Val())
 
-		return rank.Val()
+		return rank
 	})
 
 	return server

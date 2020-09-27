@@ -29,20 +29,15 @@ function useInput(val: string) {
 const App = (props) => {
   const username = useInput(props.username)
   const [rank, setRank] = useState(0)
-  const [leaders, setLeaders] = useState([])
+  const [leaders, setLeaders] = useState([ { Score: 0,  Member: "Not Connected"}])
   const [playFlag, setPlayFlag] = useState(false)
   const play = () => {
     props.setUsername(username.value)
     setPlayFlag(true)
   }
 
-  socket.on('list', function (msg) {
-    console.log(msg);
-    setLeaders(msg)
-  });
-
-  useEffect( () => {
-   let data = {
+  const emitScore = () => {
+      let data = {
           username: props.username,
           score: props.score
       }       
@@ -51,8 +46,18 @@ const App = (props) => {
       // Data is bool value, but it can be something
       setRank(data + 1)
     });
+  }
 
+  socket.on('list', function (msg) {
+    setLeaders(msg)
+    console.log("Received leaders")
+  });
+
+  useEffect( () => {
+    emitScore() 
   }, [props.score])
+
+
 
   return (
     <div className={styles.container}>
@@ -95,15 +100,15 @@ const App = (props) => {
          <div className={styles.leaderboard}>
            <div className={styles.leader_title}>Top 10 Players</div>
            {
-              leaders.map( (userN) => {
+              leaders.map( (val) => {
               
               return (
                 <div className={styles.leader_row}>
                   <div className={styles.leader_name}>
-                    {userN}
+                    {val.Member}
                  </div>
                  <div>
-                       -
+                   {val.Score}
                  </div>
               </div>
               )

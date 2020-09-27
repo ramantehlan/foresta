@@ -20,7 +20,7 @@ kafka: ## Build docker image for kafka
 
 build: web api ## Build docker images for application
 
-start: ## Start the application
+start: start@redis ## Start the application
 	docker run -d --rm \
 		--network foresta-net \
 		-v ${pwd}/web:/app \
@@ -30,6 +30,10 @@ start: ## Start the application
 		--name fw \
 		foresta-web:1.0  
 	
+		./cmd/foresta-api/foresta-api
+
+	
+start@api: ## Start the Api
 	docker run --rm \
 		--network foresta-net \
 		-p 3001:3001 \
@@ -48,10 +52,6 @@ start@redis: ## Start redis
 cli@redis: ## Enter redis cli
 	docker exec -it redis-server redis-cli
 
-
-cli@fa: ## Enter api cli
-	docker exec -it fa /bin/bash
-
 start@kafka: ## Start kafka
 	docker run --rm -d \
 	  --name zookeeper-server \
@@ -68,7 +68,8 @@ start@kafka: ## Start kafka
 
 stop: ## Stop the application
 	docker stop fw
-	docker stop fa
+	docker stop redis-server
+	#docker stop fa
 	#docker stop kafka-server
 	#docker stop zookeeper-server
 
