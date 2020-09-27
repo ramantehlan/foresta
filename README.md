@@ -83,21 +83,44 @@ This pre-requisites are not necessarily for running the project, but if you plan
 
 The file structure of this project follows the [conventional standard](https://github.com/golang-standards/project-layout), so it should be reasonably easy to understand. A description is given below:
 
-
  Folder/File Name | Description
 ------------------|------------
 /cmd | Main applications for this project. `foresta-api` lives here.
-/web | Web application used by pulse.
+/web | Web application. `foresta-web`
 
 ## Development Environment
 
+To develop or build this project, make sure you have the following environment setup:
+
+- Install, and setup Go environment.
+- Install NodeJS and yarn.
+- Install Make.
+- Clone this project in your workspace.
+
+Once you have set up the above environment, you can start developing this project.
+
 ## Build
+
+To build this project, you can use the make tool. After cloning this project, go to the root of the project. Use following commands to build the application.
+
+1. Build docker images. `make build`
+2. Start docker container. `make start`
+3. Now you can go to `localhost:3000` to use the application.
+4. To stop the docker container. `make stop`
+
+If you need to see all the comands, you can use `make help`.
 
 # Contribution
 
+ Your contributions are always welcome and appreciated. Following are the things you can do to contribute to this project.
 
+ 1. Report a bug.
+ 2. Request a feature.
+ 3. Create a pull request.
 
-# Acknowledgment
+**:sparkles: It takes time and efforts to think, design and develops open-source projects, so If you like this project, do star it so contributors can know you appreciate their efforts. :)**
+
+ > If you are new to open-source, make sure to check read more about it [here](https://www.digitalocean.com/community/tutorial_series/an-introduction-to-open-source) and learn more about creating a pull request [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github).
 
 # License
 
