@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
 	"github.com/googollee/go-socket.io"
 	l "github.com/sirupsen/logrus"
 )
@@ -28,8 +29,8 @@ func GinMiddleware(allowOrigin string) gin.HandlerFunc {
 
 // ScoreMessage is the structure of the message received by the server from client
 type ScoreMessage struct {
-	Username string `json:"username"`
-	Score    int    `json:"score"`
+	Username string  `json:"username"`
+	Score    float64 `json:"score"`
 }
 
 // StartSocket is to get the base instance of a socket server
@@ -58,9 +59,21 @@ func StartSocket() *socketio.Server {
 		l.Error(e)
 	})
 
-	server.OnEvent("/", "score", func(c socketio.Conn, score ScoreMessage) bool {
-		fmt.Print(score)
-		return true
+	server.OnEvent("/", "score", func(c socketio.Conn, score ScoreMessage) int64 {
+
+		member := redis.Z{
+			score.Score,
+			score.Username,
+		}
+
+		rdb.ZAdd("player:score", member)
+		rank := rdb.ZRevRank("player:score", score.Username)
+
+		// Top rank
+		topRank := rdb.ZRevRange("player:score", 0, 9)
+		server.BroadcastToRoom("/", "leaderboard", "list", topRank.Val())
+
+		return rank.Val()
 	})
 
 	return server

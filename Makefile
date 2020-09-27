@@ -21,21 +21,38 @@ kafka: ## Build docker image for kafka
 build: web api ## Build docker images for application
 
 start: ## Start the application
-	docker run --rm -d \
-		--network foresta-net \
-		-p 3001:3001 \
-		--name fa \
-		foresta-api:1.0 
-	
-	docker run --rm -d \
+	docker run -d --rm \
 		--network foresta-net \
 		-v ${pwd}/web:/app \
 		-v /app/node_modules \
 		-p 3000:3000 \
 		-e CHOKIDAR_USEPOLLING=true \
 		--name fw \
-		foresta-web:1.0 
-		
+		foresta-web:1.0  
+	
+	docker run --rm \
+		--network foresta-net \
+		-p 3001:3001 \
+		--link redis-server:redis \
+		--name fa \
+		foresta-api:1.0 
+
+
+start@redis: ## Start redis
+	docker run --rm -d --name redis-server \
+		  -e ALLOW_EMPTY_PASSWORD=yes \
+			-p 6379:6379 \
+			--network foresta-net \
+			redis
+
+cli@redis: ## Enter redis cli
+	docker exec -it redis-server redis-cli
+
+
+cli@fa: ## Enter api cli
+	docker exec -it fa /bin/bash
+
+start@kafka: ## Start kafka
 	docker run --rm -d \
 	  --name zookeeper-server \
 		--network foresta-net \
@@ -52,6 +69,6 @@ start: ## Start the application
 stop: ## Stop the application
 	docker stop fw
 	docker stop fa
-	docker stop kafka-server
-	docker stop zookeeper-server
+	#docker stop kafka-server
+	#docker stop zookeeper-server
 

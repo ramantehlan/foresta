@@ -103,10 +103,11 @@ Once you have set up the above environment, you can start developing this projec
 
 To build this project, you can use the make tool. After cloning this project, go to the root of the project. Use following commands to build the application.
 
-1. Build docker images. `make build`
-2. Start docker container. `make start`
-3. Now you can go to `localhost:3000` to use the application.
-4. To stop the docker container. `make stop`
+1. Create network for docker. `make network`
+2. Build docker images. `make build`
+3. Start docker container. `make start`
+4. Now you can go to `localhost:3000` to use the application.
+5. To stop the docker container. `make stop`
 
 If you need to see all the comands, you can use `make help`.
 

@@ -7,9 +7,6 @@ import io from "socket.io-client"
 
 const socket = io(":3001")
 
-socket.on('list', function (msg) {
-    console.log(msg);
-});
 
 const World = dynamic(
     () => import('../components/World'),
@@ -31,11 +28,18 @@ function useInput(val: string) {
 
 const App = (props) => {
   const username = useInput(props.username)
+  const [rank, setRank] = useState(0)
+  const [leaders, setLeaders] = useState([])
   const [playFlag, setPlayFlag] = useState(false)
   const play = () => {
     props.setUsername(username.value)
     setPlayFlag(true)
   }
+
+  socket.on('list', function (msg) {
+    console.log(msg);
+    setLeaders(msg)
+  });
 
   useEffect( () => {
    let data = {
@@ -45,6 +49,7 @@ const App = (props) => {
 
     socket.emit("score", data, function(data){
       // Data is bool value, but it can be something
+      setRank(data + 1)
     });
 
   }, [props.score])
@@ -80,7 +85,7 @@ const App = (props) => {
 
         <div className={styles.score}>
               <div className={styles.score_value}>
-                  {props.score}
+                  {props.score} [#{rank}]
               </div>
               <div className={styles.score_username}>
                   {username.value}
@@ -89,15 +94,25 @@ const App = (props) => {
 
          <div className={styles.leaderboard}>
            <div className={styles.leader_title}>Top 10 Players</div>
-           <div className={styles.leader_row}>
-                <div className={styles.leader_name}>
-                   Name
-                </div>
-                <div>
-                      430
-                </div>
-            </div>
-       
+           {
+              leaders.map( (userN) => {
+              
+              return (
+                <div className={styles.leader_row}>
+                  <div className={styles.leader_name}>
+                    {userN}
+                 </div>
+                 <div>
+                       -
+                 </div>
+              </div>
+              )
+
+              })
+
+           }
+             
+                  
           </div>
 
 

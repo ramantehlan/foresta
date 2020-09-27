@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
 )
 
 const (
@@ -10,6 +11,13 @@ const (
 	// ServerPort is the port for server
 	ServerPort = ":3001"
 )
+
+// Connect to redis
+var rdb = redis.NewClient(&redis.Options{
+	Addr:     "localhost:6379",
+	Password: "",
+	DB:       0,
+})
 
 func main() {
 	router := gin.New()
@@ -23,8 +31,6 @@ func main() {
 	router.POST("/socket.io/*any", gin.WrapH(server))
 
 	go router.Run(ServerPort)
-
-	//server.BroadcastToRoom("/", "leaderboard", "list", "data")
 
 	select {}
 }
