@@ -18,7 +18,7 @@ kafka: ## Build docker image for kafka
 	docker pull bitnami/kafka:latest
 	docker pull bitnami/zookeeper:latest
 
-build: web api ## Build docker images for application
+build: web ## Build docker images for application
 
 start: start@redis ## Start the application
 	docker run -d --rm \

@@ -62,8 +62,10 @@ Redis is an in-memory data structure project implementing a distributed, in-memo
 Apache Kafka is an open-source distributed stream-processing software. It is horizontally scalable with high-throughput and low-latency. We can use it to stream score from multiple instances to the processor server.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/29037312/94356381-7ce93d00-00ab-11eb-9cd1-929da3b77a96.jpg" width="900"/>
+<img src="https://user-images.githubusercontent.com/29037312/94365700-9a8cc580-00f0-11eb-9f19-488e6527d569.png" width="900"/>
 </p>
+
+ You can check out the working GIF [here](https://user-images.githubusercontent.com/29037312/94365699-982a6b80-00f0-11eb-9e43-eaa4bce71ea5.gif). Since it's a GIF, the quality might make the application look like it's hanging, but it's not. To try the application yourself, clone it and try it using docker.
 
 # Usage
 
