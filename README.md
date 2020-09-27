@@ -1,5 +1,5 @@
 <h1 align="center">Foresta</h1>
-<h5 align="center">Legend of fruit collection</h5>
+<h5 align="center">A simple real-time multiplayer fruit collection game</h5>
 
 <p align="center">
   <a>
@@ -13,6 +13,8 @@
    </a>
 
 </p>
+
+<img src="https://user-images.githubusercontent.com/29037312/94356685-bbccc200-00ae-11eb-9848-29d057e7f3e7.png" />
 
 # Index
 
@@ -39,12 +41,19 @@
 
 ## Build
 
+## Architecture
+
+https://user-images.githubusercontent.com/29037312/94356381-7ce93d00-00ab-11eb-9cd1-929da3b77a96.jpg
+
 # Contribution
 
 # FAQ
 
 #### How to make websocket horizontal scalalbe: 
 - https://tsh.io/blog/how-to-scale-websocket/
+
+#### Why redis for leaderboard
+- https://redislabs.com/solutions/use-cases/leaderboards/#challenges
 
 # Acknowledgment
 
